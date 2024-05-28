@@ -1,5 +1,5 @@
 # billing
-This is a Django REST framework-based application for managing investors, investments, bills, and cash calls. The application allows creating and managing records for investors and their investments, generating bills based on specific strategies, and grouping them into cash calls for further processing.
+This is a Django REST framework-based application for managing investors, investments, bills, and cash calls of a French VC-fund. The application allows creating and managing records for investors and their investments, generating bills based on specific strategies, and grouping them into cash calls for further processing.
 
 ## Table of Contents
 
@@ -24,7 +24,7 @@ This is a Django REST framework-based application for managing investors, invest
 1. **Clone the repository**:
 
     ```sh
-    git clone https://github.com/yourusername/invoicing.git
+    git clone https://github.com/LeoV31/invoicing.git
     cd invoicing
     ```
 
@@ -53,6 +53,21 @@ This is a Django REST framework-based application for managing investors, invest
 2. **Access the application**:
 
     Open your web browser and go to `http://127.0.0.1:8000/`.
+
+3. **Fill the database with relevant data**:
+
+    You can fill your database with random investors and investments by running :
+   
+   ```sh
+    python manage.py generate_data
+    ```
+   
+   Then you can automatically create the corresponding bills and cash calls with :
+   
+   ```sh
+    python manage.py generate_bills
+    python manage.py generate_cash_calls
+    ```
 
 ## App Structure
 
