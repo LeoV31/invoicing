@@ -13,13 +13,13 @@ class BillStrategy:
                 investor=investor,
                 investment=investment,
                 fees_type=fees_type,
-                date_added__year=current_year,
+                created_at__year=current_year,
             ).exists()
         else:
             return Bill.objects.filter(
                 investor=investor,
                 fees_type=fees_type,
-                date_added__year=current_year
+                created_at__year=current_year
             ).exists()
 
 class MembershipBillStrategy(BillStrategy):

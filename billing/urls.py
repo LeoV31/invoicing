@@ -9,6 +9,7 @@ urlpatterns = [
     path('investment/<int:pk>/', views.investment_detail, name='investment-detail'),
     path('bills/', views.bill_list, name='bill-list'),
     path('bill/<int:pk>/', views.bill_detail, name='bill-detail'),
+    path('grouped-bills/', views.grouped_bills_view, name='grouped-bills'),
     path('cashcalls/', views.cashcall_list, name='cashcall-list'),
     path('cashcall/<int:pk>/', views.cashcall_detail, name='cashcall-detail'),
 ]

@@ -1,3 +1,4 @@
+"""
 from django.core.management.base import BaseCommand
 from billing.models import Investor, Investment, Bill
 from datetime import date
@@ -29,3 +30,4 @@ class Command(BaseCommand):
                 )
 
         self.stdout.write(self.style.SUCCESS('Successfully created test data'))
+"""

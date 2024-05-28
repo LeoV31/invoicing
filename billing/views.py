@@ -2,9 +2,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
 from rest_framework import status
-from collections import defaultdict
 from .models import Investor, Investment, Bill, CashCall
-from .serializers import InvestorSerializer, InvestmentSerializer, BillSerializer, CashCallSerializer
+from .serializers import InvestorSerializer, InvestmentSerializer, BillSerializer, CashCallSerializer, InvestorBillsSerializer
 
 @api_view(['GET'])
 def api_root(request, format=None):
@@ -12,6 +11,7 @@ def api_root(request, format=None):
         'investors': reverse('investor-list', request=request, format=format),
         'investments': reverse('investment-list', request=request, format=format),
         'bills': reverse('bill-list', request=request, format=format),
+        'grouped-bills': reverse('grouped-bills', request=request, format=format),
         'cashcalls': reverse('cashcall-list', request=request, format=format),
     })
 
@@ -29,7 +29,7 @@ def investor_list(request):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-@api_view(['GET','PUT', 'DELETE'])
+@api_view(['GET', 'PUT', 'DELETE'])
 def investor_detail(request, pk):
     try:
         investor = Investor.objects.get(pk=pk)
@@ -90,24 +90,9 @@ def investment_detail(request, pk):
 @api_view(['GET', 'POST'])
 def bill_list(request):
     if request.method == 'GET':
-        group_by = request.GET.get('group_by')
-
-        if group_by == 'investor':
-            bills = Bill.objects.all()
-            grouped_bills = defaultdict(list)
-
-            for bill in bills:
-                grouped_bills[bill.investor.id].append(BillSerializer(bill, context={'request':request}).data)
-
-            response_data = {
-                InvestorSerializer(Investor.objects.get(id=investor_id), context={'request': request}).data['url']: bills
-                for investor_id, bills in grouped_bills.items()
-            }
-            return Response(response_data)
-        else:
-            bills = Bill.objects.all()
-            serializer = BillSerializer(bills, many=True, context={'request': request})
-            return Response(serializer.data)
+        bills = Bill.objects.all()
+        serializer = BillSerializer(bills, many=True, context={'request': request})
+        return Response(serializer.data)
 
     elif request.method == 'POST':
         serializer = BillSerializer(data=request.data, context={'request': request})
@@ -173,3 +158,9 @@ def cashcall_detail(request, pk):
     elif request.method == 'DELETE':
         cashcall.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+@api_view(['GET'])
+def grouped_bills_view(request):
+    investors = Investor.objects.prefetch_related('bills').all()
+    serializer = InvestorBillsSerializer(investors, many=True, context={'request': request})
+    return Response(serializer.data)
