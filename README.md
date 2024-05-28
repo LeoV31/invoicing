@@ -178,6 +178,3 @@ pytest
   ```
 
 - **Bill Generation Strategies**: The project uses different strategies to generate bills (MembershipBillStrategy, UpfrontBillStrategy, YearlyBillStrategy). Each strategy calculates fees based on predefined rules and conditions.
-
-
-Thanks for the reading!
