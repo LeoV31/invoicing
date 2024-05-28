@@ -59,6 +59,8 @@ def test_investor_list(api_client, investor):
     assert response.status_code == status.HTTP_200_OK
     assert len(response.data) == 1
     assert response.data[0]['name'] == investor.name
+    assert 'created_at' in response.data[0]
+    assert 'updated_at' in response.data[0]
 
 @pytest.mark.django_db
 def test_investor_detail(api_client, investor):
@@ -66,6 +68,8 @@ def test_investor_detail(api_client, investor):
     response = api_client.get(url)
     assert response.status_code == status.HTTP_200_OK
     assert response.data['name'] == investor.name
+    assert 'created_at' in response.data
+    assert 'updated_at' in response.data
 
 @pytest.mark.django_db
 def test_investment_list(api_client, investment):
@@ -74,6 +78,9 @@ def test_investment_list(api_client, investment):
     assert response.status_code == status.HTTP_200_OK
     assert len(response.data) == 1
     assert response.data[0]['startup_name'] == investment.startup_name
+    assert response.data[0]['investor_name'] == investment.investor.name
+    assert 'created_at' in response.data[0]
+    assert 'updated_at' in response.data[0]
 
 @pytest.mark.django_db
 def test_investment_detail(api_client, investment):
@@ -81,6 +88,9 @@ def test_investment_detail(api_client, investment):
     response = api_client.get(url)
     assert response.status_code == status.HTTP_200_OK
     assert response.data['startup_name'] == investment.startup_name
+    assert response.data['investor_name'] == investment.investor.name
+    assert 'created_at' in response.data
+    assert 'updated_at' in response.data
 
 @pytest.mark.django_db
 def test_bill_list(api_client, bill):
@@ -89,6 +99,10 @@ def test_bill_list(api_client, bill):
     assert response.status_code == status.HTTP_200_OK
     assert len(response.data) == 1
     assert response.data[0]['fees_amount'] == str(bill.fees_amount)
+    assert response.data[0]['investor_name'] == bill.investor.name
+    assert response.data[0]['startup_name'] == bill.investment.startup_name
+    assert 'created_at' in response.data[0]
+    assert 'updated_at' in response.data[0]
 
 @pytest.mark.django_db
 def test_bill_detail(api_client, bill):
@@ -96,6 +110,10 @@ def test_bill_detail(api_client, bill):
     response = api_client.get(url)
     assert response.status_code == status.HTTP_200_OK
     assert response.data['fees_amount'] == str(bill.fees_amount)
+    assert response.data['investor_name'] == bill.investor.name
+    assert response.data['startup_name'] == bill.investment.startup_name
+    assert 'created_at' in response.data
+    assert 'updated_at' in response.data
 
 @pytest.mark.django_db
 def test_cashcall_list(api_client, cashcall):
@@ -104,6 +122,9 @@ def test_cashcall_list(api_client, cashcall):
     assert response.status_code == status.HTTP_200_OK
     assert len(response.data) == 1
     assert response.data[0]['total_amount'] == str(cashcall.total_amount)
+    assert response.data[0]['investor_name'] == cashcall.investor.name
+    assert 'created_at' in response.data[0]
+    assert 'updated_at' in response.data[0]
 
 @pytest.mark.django_db
 def test_cashcall_detail(api_client, cashcall):
@@ -111,3 +132,6 @@ def test_cashcall_detail(api_client, cashcall):
     response = api_client.get(url)
     assert response.status_code == status.HTTP_200_OK
     assert response.data['total_amount'] == str(cashcall.total_amount)
+    assert response.data['investor_name'] == cashcall.investor.name
+    assert 'created_at' in response.data
+    assert 'updated_at' in response.data

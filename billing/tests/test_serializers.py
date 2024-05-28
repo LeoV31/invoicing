@@ -75,6 +75,7 @@ def test_investment_serializer(api_request_factory, investment):
     serialized_data = serializer.data
     expected_investor_url = f'http://testserver/investor/{investment.investor.id}/'
     assert serialized_data['investor'] == expected_investor_url
+    assert serialized_data['investor_name'] == investment.investor.name
     assert serialized_data['startup_name'] == investment.startup_name
     assert serialized_data['invested_amount'] == str(investment.invested_amount)
     assert serialized_data['fee_percentage'] == str(investment.fee_percentage)
@@ -82,7 +83,6 @@ def test_investment_serializer(api_request_factory, investment):
     assert serialized_data['fees_type'] == investment.fees_type
     assert 'created_at' in serialized_data
     assert 'updated_at' in serialized_data
-
 
 @pytest.mark.django_db
 def test_bill_serializer(api_request_factory, bill):
@@ -94,7 +94,9 @@ def test_bill_serializer(api_request_factory, bill):
     expected_investor_url = f'http://testserver/investor/{bill.investor.id}/'
     expected_investment_url = f'http://testserver/investment/{bill.investment.id}/'
     assert serialized_data['investor'] == expected_investor_url
+    assert serialized_data['investor_name'] == bill.investor.name
     assert serialized_data['investment'] == expected_investment_url
+    assert serialized_data['startup_name'] == bill.investment.startup_name
     assert serialized_data['fees_amount'] == str(bill.fees_amount)
     assert serialized_data['fees_type'] == bill.fees_type
     assert 'created_at' in serialized_data
@@ -110,6 +112,7 @@ def test_cashcall_serializer(api_request_factory, cashcall):
     expected_investor_url = f'http://testserver/investor/{cashcall.investor.id}/'
     expected_bills_url = [f'http://testserver/bill/{bill.id}/' for bill in cashcall.bills.all()]
     assert serialized_data['investor'] == expected_investor_url
+    assert serialized_data['investor_name'] == cashcall.investor.name
     assert serialized_data['bills'] == expected_bills_url
     assert serialized_data['iban'] == cashcall.iban
     assert serialized_data['total_amount'] == str(cashcall.total_amount)
