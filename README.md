@@ -35,14 +35,20 @@ This is a Django REST framework-based application for managing investors, invest
     source env/bin/activate
     ```
 
-3. **Apply migrations**:
+3. **Install dependencies**:
+
+    ```sh
+    pip install -r requirements.txt
+    ```
+
+4. **Apply migrations**:
 
     ```sh
     python manage.py makemigrations
     python manage.py migrate
     ```
 
-4. **Fill the database with relevant data**:
+5. **Fill the database with relevant data**:
 
     You can fill your database with random investors and investments by running :
    
