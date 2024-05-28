@@ -42,19 +42,7 @@ This is a Django REST framework-based application for managing investors, invest
     python manage.py migrate
     ```
 
-## Running the Project
-
-1. **Start the development server**:
-
-    ```sh
-    python manage.py runserver
-    ```
-
-2. **Access the application**:
-
-    Open your web browser and go to `http://127.0.0.1:8000/`.
-
-3. **Fill the database with relevant data**:
+4. **Fill the database with relevant data**:
 
     You can fill your database with random investors and investments by running :
    
@@ -68,6 +56,20 @@ This is a Django REST framework-based application for managing investors, invest
     python manage.py generate_bills
     python manage.py generate_cash_calls
     ```
+
+## Running the Project
+
+1. **Start the development server**:
+
+    ```sh
+    python manage.py runserver
+    ```
+
+2. **Access the application**:
+
+    Open your web browser and go to `http://127.0.0.1:8000/`.
+
+    You can now navigate through the different records (investors, investments, bills, and cash calls)!
 
 ## App Structure
 
@@ -111,7 +113,9 @@ The application exposes several API endpoints:
   - `GET /bills/{id}/`: Retrieve details of a specific bill.
   - `PUT /bills/{id}/`: Update details of a specific bill.
   - `DELETE /bills/{id}/`: Delete a specific bill.
-  - `GET /bills/group_by_investor/`: List bills grouped by investor.
+
+- **Grouped Bills**:
+  - `GET /grouped-bills/`: List all bills grouped by investor.
 
 - **Cash Calls**:
   - `GET /cashcalls/`: List all cash calls.
@@ -138,7 +142,7 @@ The application includes custom Django management commands:
     python manage.py generate_bills
     ```
 
-    This command generates bills for the CURRENT YEAR investments based on the predefined strategies(bill_strategies.py).
+    This command generates bills for the current year based on the predefined strategies (see bill_strategies.py).
 
   - **Generate Cash Calls**:
 
@@ -146,9 +150,8 @@ The application includes custom Django management commands:
     python manage.py generate_cash_calls
     ```
 
-    This command generates a maximum of 1 cash call per investor for the CURRENT YEAR bills (status of the cash call created = "created").
-    Note: If a cash call has already been created during the current year for a given investor and its status = "paid", all the bills included in this cash call wont be included in the new cash call created.
-
+    This command generates at most one cash call per investor for the current year's bills. The status of the newly created cash call will be by default "created".
+    Note: If a cash call with the status "paid" already exists for an investor in the current year, the bills included in that paid cash call will not be included in the new cash call.
 
 ## Running Tests
 
@@ -160,9 +163,21 @@ pytest
 
 ## Additional Information
 
-- The project uses Django REST framework for building the API.
-- Timestamps (`created_at` and `updated_at`) are automatically managed by Django.
-- The `generate_bills.py` command ensures no duplicate bills are created within the same year.
-- The `CashCall` model tracks the status of cash calls with statuses: `created`, `validated`, `sent`, `paid`, and `overdue`.
+- **Django REST framework**: The project uses Django REST framework for building the API, which provides powerful and flexible tools for creating web APIs.
+
+- **Timestamps**:
+  - `created_at` and `updated_at` fields are automatically managed by Django. They are used to track when a record is created and last updated, respectively.
+  - `date_added` is a specific field used in the `Investment` model to indicate the date when the investment was made.
+
+- **Admin Interface**: The project includes an admin interface for managing the models. You can access the Django admin interface at `http://127.0.0.1:8000/admin/`. Ensure you have created a superuser to log in and manage the records.
+
+  To create a superuser, run:
+  
+  ```sh
+  python manage.py createsuperuser
+  ```
+
+- **Bill Generation Strategies**: The project uses different strategies to generate bills (MembershipBillStrategy, UpfrontBillStrategy, YearlyBillStrategy). Each strategy calculates fees based on predefined rules and conditions.
+
 
 Thanks for the reading!
