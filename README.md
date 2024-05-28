@@ -1,4 +1,5 @@
-# billing
+# Invoicing Project / Billing App
+
 This is a Django REST framework-based application for managing investors, investments, bills, and cash calls of a French VC-fund. The application allows creating and managing records for investors and their investments, generating bills based on specific strategies, and grouping them into cash calls for further processing.
 
 ## Table of Contents
