@@ -77,15 +77,18 @@ This is a Django REST framework-based application for managing investors, invest
 
     You can now navigate through the different records (investors, investments, bills, and cash calls)!
 
-## App Structure
+## Project Structure
 
 - `billing/`: Contains the main application code.
+  - `__init__.py`: Marks the directory as a Python package.
   - `admin.py`: Admin configurations.
+  - `apps.py`: Application configuration
   - `models.py`: Database models.
   - `serializers.py`: Serializers for API.
   - `views.py`: API views.
   - `urls.py`: URL configurations.
   - `bill_strategies.py`: Strategies for generating bills.
+  - `migrations/`: Contains migration files for database schema changes.
   - `tests/`: Directory for tests.
     - `test_models.py`: Tests for models.
     - `test_views.py`: Tests for views.
@@ -94,6 +97,17 @@ This is a Django REST framework-based application for managing investors, invest
     - `generate_data.py`: Command to generate investors and their investments.
     - `generate_bills.py`: Command to generate bills.
     - `generate_cash_calls.py`: Command to generate cash calls.
+- `invoicing/`: Contains project-wide settings and configurations.
+    - `__init__.py`: Marks the directory as a Python package.
+    - `asgi.py`: ASGI configuration.
+    - `settings.py`: Project settings.
+    - `urls.py`: URL routing for the project.
+    - `wsgi.py`: WSGI configuration.
+- `.gitignore`: Specifies files and directories to be ignored by Git.
+- `README.md`: The project's readme file.
+- `manage.py`: Django's command-line utility for administrative tasks.
+- `pytest.ini`: Configuration file for pytest.
+- `requirements.txt`: A file listing the project's dependencies.
 
 ## API Endpoints
 
