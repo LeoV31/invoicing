@@ -183,8 +183,6 @@ pytest
 
 ## Additional Information
 
-- **Django REST framework**: The project uses Django REST framework for building the API, which provides powerful and flexible tools for creating web APIs.
-
 - **Timestamps**:
   - `created_at` and `updated_at` fields are automatically managed by Django. They are used to track when a record is created and last updated, respectively.
   - `date_added` is a specific field used in the `Investment` model to indicate the date when the investment was made.
