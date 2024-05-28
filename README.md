@@ -50,7 +50,7 @@ This is a Django REST framework-based application for managing investors, invest
     python manage.py generate_data
     ```
    
-   Then you can automatically create the corresponding bills and cash calls with :
+   Then you can automatically create the corresponding bills and cash calls for the current year with :
    
    ```sh
     python manage.py generate_bills
@@ -134,7 +134,7 @@ The application includes custom Django management commands:
     python manage.py generate_data
     ```
 
-    This command creates 10 investors and between 0 to 1 investment per investor per year since 2017 (ie. a maximum of 8 investments for 1 investor).
+    This command creates 10 investors. Each investor will have between 0 to 1 investment per year since 2017, resulting in a maximum of 8 investments per investor.
 
 - **Generate Bills**:
 
@@ -144,7 +144,7 @@ The application includes custom Django management commands:
 
     This command generates bills for the current year based on the predefined strategies (see bill_strategies.py).
 
-  - **Generate Cash Calls**:
+- **Generate Cash Calls**:
 
     ```sh
     python manage.py generate_cash_calls
